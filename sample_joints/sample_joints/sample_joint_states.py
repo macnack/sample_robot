@@ -19,6 +19,8 @@ class SampleJointStates(Node):
         msg.name.append("single_rrbot_joint1")
         msg.name.append("single_rrbot_joint2")
         msg.name.append("single_rrbot_joint3")
+        msg.name.append("single_rrbot_joint4")
+        msg.position.append(0.0)
         msg.position.append(0.0)
         msg.position.append(0.0)
         msg.position.append(0.0)
@@ -27,10 +29,10 @@ class SampleJointStates(Node):
         while rclpy.ok():
             counter += 0.1
 
-            msg.position[0] = np.abs(np.sin(counter/5))
-            msg.position[1] = np.sin(counter)
-            msg.position[2] = np.sin(counter)
-
+            msg.position[0] = np.abs(np.sin(counter/5) * np.pi/2.0)
+            msg.position[1] = -1.0 * np.abs(np.sin(counter/5) * np.pi/2.0)
+            msg.position[2] = ( np.pi / 5.0 ) * counter/5
+            msg.position[3] = ( -1.0 / 5.0 ) * counter/5
             msg.header.stamp = self.get_clock().now().to_msg()
             self.publisher_.publish(msg)
             rate.sleep()

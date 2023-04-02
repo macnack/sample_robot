@@ -43,6 +43,8 @@ class ShowJointStates(Node):
             axs[1].set_title("single_rrbot_joint2")
             axs[2].plot(self.state["single_rrbot_joint3"])
             axs[2].set_title("single_rrbot_joint3")
+            axs[3].plot(self.state["single_rrbot_joint4"])
+            axs[3].set_title("single_rrbot_joint4")
             fig.tight_layout()
             plt.show()
 
