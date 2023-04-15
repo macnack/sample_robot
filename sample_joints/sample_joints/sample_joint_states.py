@@ -14,11 +14,14 @@ class SampleJointStates(Node):
         super().__init__('sample_joint_states')
         self.publisher_ = self.create_publisher(JointState, '/joint_states', 10)
 
+
     def run(self):
         msg = JointState()
         msg.name.append("single_rrbot_joint1")
         msg.name.append("single_rrbot_joint2")
         msg.name.append("single_rrbot_joint3")
+        msg.name.append("single_rrbot_joint4")
+        msg.position.append(0.0)
         msg.position.append(0.0)
         msg.position.append(0.0)
         msg.position.append(0.0)
@@ -26,11 +29,19 @@ class SampleJointStates(Node):
         rate = self.create_rate(50)
         while rclpy.ok():
             counter += 0.1
+            if counter > np.pi * 100.0 / 2.0:
+                msg.position[0] = np.pi/2.0
+            else:
+                msg.position[0] = np.sin(counter / 100.0) * np.pi / 2.0
 
-            msg.position[0] = np.abs(np.sin(counter/5))
-            msg.position[1] = np.sin(counter)
-            msg.position[2] = np.sin(counter)
-
+            msg.position[1] = -1.0 * np.abs(np.sin(counter/5.0) * np.pi/2.0)
+            if counter > 300.0:
+                msg.position[2] = np.pi
+                msg.position[3] = -1.0
+            else:
+                msg.position[2] = np.pi * counter / 300.0
+                msg.position[3] = -1.0 * counter / 300.0
+                
             msg.header.stamp = self.get_clock().now().to_msg()
             self.publisher_.publish(msg)
             rate.sleep()

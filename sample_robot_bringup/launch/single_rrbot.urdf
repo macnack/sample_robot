@@ -39,13 +39,12 @@
 
   <link name="single_rrbot_link1">
   </link>
-  <joint name="single_rrbot_joint1" type="prismatic">
+  <joint name="single_rrbot_joint1" type="continuous">
     <parent link="single_rrbot_link1"/>
     <child link="single_rrbot_link2"/>
-    <origin rpy="0 0 0" xyz="0 0.1 0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 1"/>
     <axis xyz="0 0 1"/>
     <dynamics damping="0.7"/>
-    <limit lower="0.0" upper="1.0" effort="30.0" velocity="1.0"/>
   </joint>
 
   <link name="single_rrbot_link2">
@@ -53,8 +52,8 @@
   <joint name="single_rrbot_joint2" type="continuous">
     <parent link="single_rrbot_link2"/>
     <child link="single_rrbot_link3"/>
-    <origin rpy="0 0 0" xyz="0 0.1 1.0"/>
-    <axis xyz="0 1 0"/>
+    <origin rpy="0 0 0" xyz="1 0 0"/>
+    <axis xyz="0 0 1"/>
     <dynamics damping="0.7"/>
   </joint>
 
@@ -63,13 +62,25 @@
   <joint name="single_rrbot_joint3" type="continuous">
     <parent link="single_rrbot_link3"/>
     <child link="single_rrbot_link4"/>
-    <origin rpy="0 0 0" xyz="0 0.1 0.9"/>
-    <axis xyz="0 1 0"/>
+    <origin rpy="0 0 0" xyz="0 1 0"/>
+    <axis xyz="0 0 1"/>
     <dynamics damping="0.7"/>
   </joint>
 
   <link name="single_rrbot_link4">
   </link>
+  <joint name="single_rrbot_joint4" type="prismatic">
+    <parent link="single_rrbot_link4"/>
+    <child link="single_rrbot_link5"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+    <limit lower="0.0" upper="-1.0" effort="30.0" velocity="1.0"/>
+  </joint>
+
+  <link name="single_rrbot_link5">
+  </link>
+
   <transmission name="single_rrbot_tran1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="single_rrbot_joint1">
@@ -97,6 +108,14 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <transmission name="single_rrbot_tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="single_rrbot_joint4">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="single_rrbot_motor4">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
 </robot>
-
